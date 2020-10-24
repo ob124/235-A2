@@ -1,12 +1,6 @@
 """Initialize Flask app."""
-
-import os
-
-from flask import Flask, session
-
+from flask import Flask
 import Movies.adapters.repository as repo
-
-
 from Movies.adapters.memory_repository import MemoryRepository
 
 

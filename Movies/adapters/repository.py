@@ -11,9 +11,6 @@ class RepositoryException(Exception):
 
 
 class AbstractRepository(abc.ABC):
-    @abc.abstractmethod
-    def add_movie(self, Movie):
-        raise NotImplementedError
 
     @abc.abstractmethod
     def get_movie(self, movieid):

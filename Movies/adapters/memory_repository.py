@@ -27,10 +27,6 @@ class MemoryRepository(AbstractRepository):
         self._actors = movie_file_reader.dataset_of_actors
         self._directors = movie_file_reader.dataset_of_directors
 
-    def add_movie(self, movie):
-        if movie not in self._movies:
-            self._movies.append(movie)
-
     def get_movie(self, movieid):
         if 0 <= movieid < len(self._movies):
             return self._movies[movieid]
