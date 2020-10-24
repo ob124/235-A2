@@ -2,3 +2,5 @@ ID,username,movie_id,review,rating
 0,bob,0,it was good,9
 1,jim,1, it was average,7
 2,steve,2,it was scary,8
+3,james,0,it was okay,6
+4,james,1,it was great,9

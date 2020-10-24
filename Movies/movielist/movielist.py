@@ -20,14 +20,10 @@ def movielist(movieid):
 
     if request.method == 'POST':
         # Grab user
-        user = ""
-        user_list = repo.repo_instance.get_users()
-        for i in range(len(user_list)):
-            if user_name == user_list[i].user_name:
-                user = user_list[i]
+        user = session['login']
         # submit review
-        repo.repo_instance.add_review(user, request.form['new_review'], movie, int(request.form['rating']))
-        redirect(url_for('movielist_bp.movielist', movieid=str(movie_id)))
+        repo.repo_instance.add_review(user, movie_id, request.form['new_review'], int(request.form['rating']))
+        return redirect(url_for('movielist_bp.movielist', movieid=str(movie_id)))
 
     if session['search'] is not None:
         session_string = session['search'].split()
@@ -90,9 +86,9 @@ def movielist(movieid):
     final_review_list = list()
     for i in range(len(movie_reviews)):
         final_review_list.append("User: {0}".format(movie_reviews[i].user.user_name))
-        final_review_list.append("\n")
+        final_review_list.append("Rating:{0}".format(movie_reviews[i].rating))
         final_review_list.append(movie_reviews[i].review_text)
-        final_review_list.append("\n")
+        final_review_list.append("----------")
     # need to grab the user
 
     return render_template('movielist/movielist.html', next_list=next_movie, previous_list=previous_movie,

@@ -12,7 +12,7 @@ class ReviewFileCSVReader:
         self.__dataset_of_reviews = list()
 
     def read_csv_file(self):
-        with open(self.__file_name, mode='a', encoding='utf-8-sig') as csvfile:
+        with open(self.__file_name, mode='r', encoding='utf-8-sig') as csvfile:
             movie_file_reader = csv.DictReader(csvfile)
 
             for row in movie_file_reader:
@@ -31,7 +31,7 @@ class ReviewFileCSVReader:
                 user_review.user = user
 
     def write_csv_file(self, review_id, username, movie, review, rating):
-        with open(self.__file_name, mode='w', newline='') as csvfile:
+        with open(self.__file_name, mode='a', newline='') as csvfile:
             writer = csv.writer(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
             writer.writerow([review_id, username, movie, review, rating])
 

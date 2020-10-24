@@ -75,15 +75,20 @@ class MemoryRepository(AbstractRepository):
     def get_reviews(self):
         return self._reviews
 
-    def add_review(self, username, review, movie, rating):
+    def add_review(self, username, movie_id, review, rating):
         file_name = 'Movies/datafiles/reviews.csv'
         review_reader = ReviewFileCSVReader(file_name)
-        review_reader.write_csv_file(len(self._reviews), username, review, movie, rating)
-        user_review = Review(movie, review, rating)
+        review_reader.write_csv_file(len(self._reviews), username, movie_id, review, rating)
+        # need to convert movie_id to actual movie here
+        user_review = Review(self.get_movie(movie_id), review, rating)
         self._reviews.append(user_review)
         # user name is unique so search by that when adding a review to a user
-        user = self.get_user(username)
+        user = ""
+        for i in range(len(self._users)):
+            if self._users[i].user_name == username:
+                user = self._users[i]
         user.add_review(user_review)
+        user_review.user = user
 
     def populate(self):
         self.load_movies()
