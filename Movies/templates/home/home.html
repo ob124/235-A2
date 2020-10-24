@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h1>Movie Library</h1>
+<button type="button" onclick="location.href='/login'">Log in/out</button>
+<p>
+The Movie Library contains a list of movies!
+</p>
+{% if user_name is not none %}
+    <p>{{user_name}}</p>
+{% endif %}
+<form action="/" method="POST">
+    <label>Search:</label>
+    <input type="text" class="form-control" name="title_search" placeholder="Enter a Title">
+    <input type="text" class="form-control" name="director_search" placeholder="Enter a Director">
+    <input type="text" class="form-control" name="actor_search" placeholder="Enter an Actor">
+    <input type="text" class="form-control" name="genre_search" placeholder="Enter a Genre">
+    <button type="submit" class="btn btn-primary">Go!</button>
+</form>
+{% endblock %}

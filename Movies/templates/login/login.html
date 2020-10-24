@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1>Login</h1>
+<button type="button" onclick="location.href='/'">Home</button>
+{% if user_name is none %}
+    <button type="button" onclick="location.href='/register'">Register</button>
+{% else %}
+    <button class="btn-general-disabled" disabled>Register</button>
+    <p>{{user_name}}</p>
+{% endif %}
+<p>
+Please enter your credentials:
+</p>
+<form action="/login" method="POST">
+    <label>Search:</label>
+    <input type="text" class="form-control" name="username" placeholder="username">
+    <input type="password" class="form-control" name="password" placeholder="password">
+    <button type="submit" class="btn btn-primary" value="login" name="button">Login</button>
+    <button type="submit" class="btn btn-primary" value="logout" name="button">Logout</button>
+</form>
+
+{% endblock %}

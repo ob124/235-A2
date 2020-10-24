@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+movieid,
+{% block content %}
+<h1>Movie Library</h1>
+{% if user_name is not none %}
+    <p>{{user_name}}</p>
+{% endif %}
+<button type="button" onclick="location.href='/login'">Log in/out</button>
+<button type="button" onclick="location.href='/'">Home</button>
+<h2>{{movie_title}}</h2>
+{% for para in movie_description %}
+    <p>{{para}}</p>
+{% endfor %}
+ <button type="button"onclick="location.href='{{previous_list}}'">Previous</button>
+<button type="button" onclick="location.href='{{next_list}}'">Next</button>
+<h3>Reviews</h3>
+{% if user_name is not none %}
+    <form action="/login" method="POST">
+    <input type="text" class="form-control" name="new_review" placeholder="Review">
+    <button type="submit" class="btn btn-primary">Submit Review</button>
+</form>
+{% endif %}
+{% for para in movie_reviews %}
+    <p>{{para}}</p>
+{% endfor %}
+{% endblock %}
