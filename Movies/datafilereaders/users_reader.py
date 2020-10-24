@@ -20,7 +20,7 @@ class UserFileCSVReader:
                 self.__dataset_of_users.append(User(username, password))
 
     def write_csv_file(self, user_id, username, password):
-        with open(self.__file_name, mode='w', newline='') as csvfile:
+        with open(self.__file_name, mode='a', newline='') as csvfile:
             writer = csv.writer(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
             writer.writerow([user_id, username, password])
 

@@ -16,10 +16,11 @@ movieid,
 <button type="button" onclick="location.href='{{next_list}}'">Next</button>
 <h3>Reviews</h3>
 {% if user_name is not none %}
-    <form action="/login" method="POST">
-    <input type="text" class="form-control" name="new_review" placeholder="Review">
-    <button type="submit" class="btn btn-primary">Submit Review</button>
-</form>
+    <form action="/movie/{{movie_id}}" method="POST">
+        <input type="text" class="form-control" name="new_review" placeholder="Review">
+        <input type="number" class="form-control" name="rating" placeholder="Rating">
+        <button type="submit" class="btn btn-primary">Submit Review</button>
+    </form>
 {% endif %}
 {% for para in movie_reviews %}
     <p>{{para}}</p>

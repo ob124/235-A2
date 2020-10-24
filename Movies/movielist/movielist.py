@@ -8,18 +8,26 @@ movielist_blueprint = Blueprint('movielist_bp', __name__)
 
 @movielist_blueprint.route('/movie/<movieid>', methods=['GET', 'POST'])
 def movielist(movieid):
+    next_movie = ""
+    previous_movie = ""
+    movie_id = int(movieid)
+    movie = repo.repo_instance.get_movie(movie_id)
+
     if session['login'] is not None:
         user_name = "Hello {0}!".format(session['login'])
     else:
         user_name = None
 
     if request.method == 'POST':
+        # Grab user
+        user = ""
+        user_list = repo.repo_instance.get_users()
+        for i in range(len(user_list)):
+            if user_name == user_list[i].user_name:
+                user = user_list[i]
         # submit review
-        pass
-
-    next_movie = ""
-    previous_movie = ""
-    id = int(movieid)
+        repo.repo_instance.add_review(user, request.form['new_review'], movie, int(request.form['rating']))
+        redirect(url_for('movielist_bp.movielist', movieid=str(movie_id)))
 
     if session['search'] is not None:
         session_string = session['search'].split()
@@ -36,18 +44,17 @@ def movielist(movieid):
             previous_movie = url_for('movielist_bp.movielist', movieid=session_string[id_location])
     else:
         # check that the next_list doesn't out of bounds
-        if id + 1 <= repo.repo_instance.get_num_movies() - 1:
-            next_movie = url_for('movielist_bp.movielist', movieid=str(id + 1))
+        if movie_id + 1 <= repo.repo_instance.get_num_movies() - 1:
+            next_movie = url_for('movielist_bp.movielist', movieid=str(movie_id + 1))
         else:
-            next_movie = url_for('movielist_bp.movielist', movieid=str(id))
+            next_movie = url_for('movielist_bp.movielist', movieid=str(movie_id))
 
-        if id-1 >= 0:
-            previous_movie = url_for('movielist_bp.movielist', movieid=str(id - 1))
+        if movie_id-1 >= 0:
+            previous_movie = url_for('movielist_bp.movielist', movieid=str(movie_id - 1))
         else:
-            previous_movie = url_for('movielist_bp.movielist', movieid=str(id))
+            previous_movie = url_for('movielist_bp.movielist', movieid=str(movie_id))
 
     # Sets up the movie names based off the page_num
-    movie = repo.repo_instance.get_movie(id)
     movie_title = movie.title
 
     # grabs director, actors, and genres and converts them to string format
@@ -90,4 +97,4 @@ def movielist(movieid):
 
     return render_template('movielist/movielist.html', next_list=next_movie, previous_list=previous_movie,
                            movie_description=movie_description, movie_title=movie_title, user_name=user_name,
-                           movie_reviews=final_review_list)
+                           movie_reviews=final_review_list, movie_id=movie_id)

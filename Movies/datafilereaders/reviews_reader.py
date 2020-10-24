@@ -12,7 +12,7 @@ class ReviewFileCSVReader:
         self.__dataset_of_reviews = list()
 
     def read_csv_file(self):
-        with open(self.__file_name, mode='r', encoding='utf-8-sig') as csvfile:
+        with open(self.__file_name, mode='a', encoding='utf-8-sig') as csvfile:
             movie_file_reader = csv.DictReader(csvfile)
 
             for row in movie_file_reader:
